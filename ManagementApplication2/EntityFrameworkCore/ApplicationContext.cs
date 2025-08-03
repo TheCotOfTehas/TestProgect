@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ERPSystemDevelopment.EntityFrameworkCore
+namespace ManagementApplication.EntityFrameworkCore
 {
     public class ApplicationContext : DbContext
     {

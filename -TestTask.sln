@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPSystemDevelopment", "ERP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagementApplication", "ManagementApplication\ManagementApplication.csproj", "{BDADFB76-D210-48B3-8B3A-501E6D115185}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagementApplication", "ManagementApplication2\ManagementApplication.csproj", "{030476C6-B5B3-4422-9851-23F34F0DF471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{13F121D3-F3E7-473E-A470-CCF8473B7E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F121D3-F3E7-473E-A470-CCF8473B7E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F121D3-F3E7-473E-A470-CCF8473B7E81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDADFB76-D210-48B3-8B3A-501E6D115185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDADFB76-D210-48B3-8B3A-501E6D115185}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDADFB76-D210-48B3-8B3A-501E6D115185}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDADFB76-D210-48B3-8B3A-501E6D115185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{030476C6-B5B3-4422-9851-23F34F0DF471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{030476C6-B5B3-4422-9851-23F34F0DF471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{030476C6-B5B3-4422-9851-23F34F0DF471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{030476C6-B5B3-4422-9851-23F34F0DF471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BDADFB76-D210-48B3-8B3A-501E6D115185} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{030476C6-B5B3-4422-9851-23F34F0DF471} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D84F8ED-C633-471B-85CF-21F1437BFB94}
