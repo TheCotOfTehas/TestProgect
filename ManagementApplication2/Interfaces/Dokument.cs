@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,8 @@ namespace ManagementApplication.Interfaces
 {
     public interface IDocument
     {
-        public int Id { get; }
+        [Required]
+        public Guid Id { get; set; }
         public int Number { get; set; }
         public DateTime DateTime { get; set; }
     }
