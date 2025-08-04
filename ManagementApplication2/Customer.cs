@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagementApplication.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class ResourceReceipt
+    internal class Customer : IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }
-
-        public Guid ResourceId { get; set; }
-        public Guid UnitId { get; set; }
-        public double Amount { get; set; }
+        public Address AddressCustomer { get; set; }
+        public string Name { get; set; }
+        public StatusTD Status { get; set; }
     }
 }

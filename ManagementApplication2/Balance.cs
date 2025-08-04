@@ -14,6 +14,5 @@ namespace ManagementApplication
         public Guid ResourceId { get; set; }
         public Guid UnitId { get; set; }
         public double Amount { get; set; }
-
     }
 }
