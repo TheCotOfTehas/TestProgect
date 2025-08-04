@@ -1,0 +1,67 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>Управление складом</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="~/css/warehouse.css" asp-append-version="true">
+    <style>
+        .container {
+            width: 100%;
+            display: flex; /* Используем flexbox для выравнивания */
+        }
+
+        .left-column {
+            width: 50%; /* Ширина левой колонки */
+            padding: 10px;
+            box-sizing: border-box; /* Включаем padding в ширину */
+        }
+
+        .right-column {
+            width: 50%; /* Ширина правой колонки */
+            padding: 10px;
+            box-sizing: border-box; /* Включаем padding в ширину */
+        }
+    </style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="left-column">
+			<h2>Левая часть</h2>
+			<p>Содержимое левой части.</p>
+            <div class="sidebar">
+                <h2>Навигация</h2>
+                <ul>
+                    <li>
+                        <a href="#warehouse" class="dropdown">Склад</a>
+                        <ul>
+                            <li><a href="#" class="table-link">Баланс</a></li>
+                            <li><a href="#" class="table-link">Поступления</a></li>
+                            <li><a href="#" class="table-link">Отгрузки</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#reference" class="dropdown">Справочники</a>
+                        <ul>
+                            <li><a href="#" class="table-link">Клиенты</a></li>
+                            <li><a href="#" class="table-link">Единицы измерения</a></li>
+                            <li><a href="#" class="table-link">Ресурсы</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+		</div>
+
+		<div class="right-column">
+			<h2>Правая часть</h2>
+			<p>Содержимое правой части.</p>
+			@RenderBody()
+		</div>
+	</div>
+
+
+</body>
+</html>

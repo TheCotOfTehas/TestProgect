@@ -10,6 +10,7 @@ namespace ERPSystemDevelopment
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
 
@@ -26,13 +27,17 @@ namespace ERPSystemDevelopment
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.MapStaticAssets();
-            app.MapRazorPages()
-               .WithStaticAssets();
+            app.MapRazorPages().WithStaticAssets();
+
+            //регистрируем нужные маршруты
+            app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }
