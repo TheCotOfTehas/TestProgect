@@ -1,5 +1,6 @@
-using EF.EntityFrameworkCore;
+using EFApp.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ManagementApplication;
 using System;
 
 namespace ERPSystemDevelopment
@@ -15,7 +16,7 @@ namespace ERPSystemDevelopment
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddDbContext<ApplicationContext>(x => 
+            builder.Services.AddDbContext<ApplicationContext>(x =>
                 x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;"));
 
             var app = builder.Build();
@@ -26,6 +27,10 @@ namespace ERPSystemDevelopment
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
             }
 
             app.UseHttpsRedirection();

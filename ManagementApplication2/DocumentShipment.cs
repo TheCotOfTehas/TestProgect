@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class DocumentShipment : IDocument
+    public class DocumentShipment : IDocument
     {
         [Required]
         public Guid Id { get; set; }

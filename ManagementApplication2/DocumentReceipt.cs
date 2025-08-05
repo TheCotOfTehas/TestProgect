@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class DocumentReceipt : IDocument
+    public class DocumentReceipt : IDocument
     {
         [Required]
         public Guid Id { get; set; }

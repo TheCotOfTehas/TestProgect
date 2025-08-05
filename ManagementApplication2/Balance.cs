@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class Balance
+    public class Balance
     {
         [Required]
         public Guid Id { get; set; }

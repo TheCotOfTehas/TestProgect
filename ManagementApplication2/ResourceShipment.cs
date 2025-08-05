@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class ResourceShipment
+    public class ResourceShipment
     {
         [Required]
         public Guid Id { get; set; }

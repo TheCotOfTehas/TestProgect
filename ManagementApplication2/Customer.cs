@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    internal class Customer : IBaseEntity
+    public class Customer : IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }

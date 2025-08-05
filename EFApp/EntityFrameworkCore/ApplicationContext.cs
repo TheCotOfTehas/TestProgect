@@ -2,16 +2,22 @@
 using System;
 using ManagementApplication;
 
-namespace EF.EntityFrameworkCore
+namespace EFApp.EntityFrameworkCore
 {
     public partial class ApplicationContext : DbContext
     {
         public DbSet<Resource> Resources { get; set; } = null!;
-        //public DbSet<UnitMeasurement> UnitMeasurements { get; set; } = null!;
-        //public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<UnitMeasurement> UnitMeasurements { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
+
+        public ApplicationContext()
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+        }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
