@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EF\EF.csproj" />
+    <ProjectReference Include="..\ManagementApplication2\ManagementApplication.csproj" />
   </ItemGroup>
 
   <ItemGroup>

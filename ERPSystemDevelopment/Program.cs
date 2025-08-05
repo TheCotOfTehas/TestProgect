@@ -1,5 +1,6 @@
 using EF.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ERPSystemDevelopment
 {
@@ -14,7 +15,9 @@ namespace ERPSystemDevelopment
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddDbContext<ApplicationContext>(x => x.UseSqlServer());
+            builder.Services.AddDbContext<ApplicationContext>(x => 
+                x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;"));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

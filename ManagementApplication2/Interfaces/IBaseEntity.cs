@@ -11,7 +11,9 @@ namespace ManagementApplication.Interfaces
     {
         [Required]
         public Guid Id { get; set; }
+        [Display(Name = "Имя")]
         public string Name { get; set; }
+        [Display(Name = "Статус")]
         public StatusTD Status { get; set; }
     }
 }
