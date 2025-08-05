@@ -24,6 +24,48 @@ namespace EFApp.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingResourceReceipt(modelBuilder);
+
+        }
+
+        protected void OnModelCreatingResourceReceipt(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Resource>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Status).IsRequired();
+
+                entity.HasMany<ResourceReceipt>()
+                      .WithOne() // Здесь не создаем обратную связь
+                      .HasForeignKey(rr => rr.ResourceId);
+            });
+
+            modelBuilder.Entity<UnitMeasurement>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Status).IsRequired();
+
+                entity.HasMany<ResourceReceipt>()
+                      .WithOne() // Здесь не создаем обратную связь
+                      .HasForeignKey(rr => rr.UnitId);
+            });
+
+            modelBuilder.Entity<ResourceReceipt>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Amount).IsRequired();
+
+                // Сопоставление с Resource и UnitMeasurement
+                entity.HasOne<Resource>()
+                      .WithMany(rr => rr.ResourceReceipts)
+                      .HasForeignKey(rr => rr.ResourceId);
+
+                entity.HasOne<UnitMeasurement>()
+                      .WithMany(rr => rr.ResourceReceipts)
+                      .HasForeignKey(rr => rr.UnitId);
+            });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

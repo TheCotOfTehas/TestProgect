@@ -14,5 +14,8 @@ namespace ManagementApplication
         public Guid Id { get; set; }
         public string Name { get; set; }
         public StatusTD Status { get; set; }
+
+        // Коллекция для связанных записей
+        public ICollection<ResourceReceipt> ResourceReceipts { get; set; }
     }
 }
