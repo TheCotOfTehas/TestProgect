@@ -25,7 +25,7 @@ namespace EFApp.EntityFrameworkCore
         {
             OnModelCreatingPartial(modelBuilder);
             OnModelCreatingResourceReceipt(modelBuilder);
-
+            OnModelCreatingResourceShipment(modelBuilder);
         }
 
         protected void OnModelCreatingResourceReceipt(ModelBuilder modelBuilder)
@@ -65,6 +65,22 @@ namespace EFApp.EntityFrameworkCore
                 entity.HasOne<UnitMeasurement>()
                       .WithMany(rr => rr.ResourceReceipts)
                       .HasForeignKey(rr => rr.UnitId);
+            });
+        }
+
+        protected void OnModelCreatingResourceShipment(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ResourceShipment>(entity =>
+            {
+                entity.HasKey(rs => rs.Id);
+
+                entity.HasOne(rs => rs.Resource)
+                      .WithMany(r => r.ResourceShipments)
+                      .HasForeignKey(rs => rs.ResourceId);
+
+                entity.HasOne(rs => rs.UnitMeasurement)
+                      .WithMany(um => um.ResourceShipments) 
+                      .HasForeignKey(rs => rs.UnitId);
             });
         }
 

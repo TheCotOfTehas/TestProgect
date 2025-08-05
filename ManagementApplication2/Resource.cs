@@ -17,5 +17,8 @@ namespace ManagementApplication
 
         // Коллекция для связанных записей
         public ICollection<ResourceReceipt> ResourceReceipts { get; set; }
+
+        // Коллекция для связанных записей отгрузок
+        public ICollection<ResourceShipment> ResourceShipments { get; set; }
     }
 }
