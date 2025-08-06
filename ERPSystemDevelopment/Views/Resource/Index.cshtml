@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Resource>
+
+<h2>Students</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var resource in Model)
+        {
+            <tr>
+                <td>
+                    <input type="text" asp-for="@resource.Name" />
+                </td>
+                <td>
+                    <input type="text" asp-for="@resource.Status" />
+                </td>
+                <td>
+                    <form method="post" asp-action="Edit">
+                        <input type="hidden" name="id" value="@resource.Id" />
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -9,6 +9,8 @@ namespace EFApp.EntityFrameworkCore
         public DbSet<Resource> Resources { get; set; } = null!;
         public DbSet<UnitMeasurement> UnitMeasurements { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<DocumentReceipt> DocumentReceipts { get; set; } = null!;
+        public DbSet<DocumentShipment> DocumentShipments { get; set; } = null!;
 
         public ApplicationContext()
         {
