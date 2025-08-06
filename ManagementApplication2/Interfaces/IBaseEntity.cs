@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication.Interfaces
 {
-    internal interface IBaseEntity
+    public interface IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }

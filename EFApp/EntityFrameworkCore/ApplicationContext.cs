@@ -20,8 +20,7 @@ namespace EFApp.EntityFrameworkCore
         }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +28,7 @@ namespace EFApp.EntityFrameworkCore
             OnModelCreatingPartial(modelBuilder);
             OnModelCreatingResourceReceipt(modelBuilder);
             OnModelCreatingResourceShipment(modelBuilder);
+            SeedData(modelBuilder);
         }
 
         protected void OnModelCreatingResourceReceipt(ModelBuilder modelBuilder)
@@ -91,6 +91,30 @@ namespace EFApp.EntityFrameworkCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
+        }
+
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            // Заполнение таблицы UnitMeasurements
+            modelBuilder.Entity<UnitMeasurement>().HasData(
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
+            );
+
+            // Заполнение таблицы Resources
+            modelBuilder.Entity<Resource>().HasData(
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
+            );
+
+            // Заполнение таблицы Customers
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success }
+            );
         }
     }
 }
