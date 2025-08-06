@@ -31,8 +31,6 @@
 <body>
 	<div class="container">
 		<div class="left-column">
-			<h2>Левая часть</h2>
-			<p>Содержимое левой части.</p>
             <div class="sidebar" style="min-inline-size:350px">
                 <h2>Навигация</h2>
                 <ul>
@@ -48,7 +46,7 @@
                         <a href="#reference" class="dropdown">Справочники</a>
                         <ul>
                             <li><a asp-controller="Customers" asp-action="Index" class="table-link">Клиенты</a></li>
-                            <li><a href="#" class="table-link">Единицы измерения</a></li>
+                            <li><a asp-controller="UnitMeasurements" asp-action="Index" class="table-link">Единицы измерения</a></li>
                             <li><a asp-controller="Resource" asp-action="Index" class="table-link">Ресурсы</a></li>
                         </ul>
                     </li>
@@ -57,8 +55,6 @@
 		</div>
 
 		<div class="right-column">
-			<h2>Правая часть</h2>
-			<p>Содержимое правой части.</p>
 			@RenderBody()
 		</div>
 	</div>
