@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using EFApp.EntityFrameworkCore;
 using ManagementApplication;
 
-namespace ERPSystemDevelopment.Controllers
+namespace ERPSystemDevelopment.Controllers.Warehouse
 {
-    public class UnitMeasurementsController : Controller
+    public class BalancesController : Controller
     {
         private readonly ApplicationContext _context;
 
-        public UnitMeasurementsController(ApplicationContext context)
+        public BalancesController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: UnitMeasurements
+        // GET: Balances
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UnitMeasurements.ToListAsync());
+            return View(await _context.Balances.ToListAsync());
         }
 
-        // GET: UnitMeasurements/Details/5
+        // GET: Balances/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -33,40 +33,40 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var unitMeasurement = await _context.UnitMeasurements
+            var balance = await _context.Balances
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (unitMeasurement == null)
+            if (balance == null)
             {
                 return NotFound();
             }
 
-            return View(unitMeasurement);
+            return View(balance);
         }
 
-        // GET: UnitMeasurements/Create
+        // GET: Balances/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: UnitMeasurements/Create
+        // POST: Balances/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
+        public async Task<IActionResult> Create([Bind("Id,ResourceId,UnitId,Amount")] Balance balance)
         {
             if (ModelState.IsValid)
             {
-                unitMeasurement.Id = Guid.NewGuid();
-                _context.Add(unitMeasurement);
+                balance.Id = Guid.NewGuid();
+                _context.Add(balance);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(unitMeasurement);
+            return View(balance);
         }
 
-        // GET: UnitMeasurements/Edit/5
+        // GET: Balances/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var unitMeasurement = await _context.UnitMeasurements.FindAsync(id);
-            if (unitMeasurement == null)
+            var balance = await _context.Balances.FindAsync(id);
+            if (balance == null)
             {
                 return NotFound();
             }
-            return View(unitMeasurement);
+            return View(balance);
         }
 
-        // POST: UnitMeasurements/Edit/5
+        // POST: Balances/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ResourceId,UnitId,Amount")] Balance balance)
         {
-            if (id != unitMeasurement.Id)
+            if (id != balance.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace ERPSystemDevelopment.Controllers
             {
                 try
                 {
-                    _context.Update(unitMeasurement);
+                    _context.Update(balance);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UnitMeasurementExists(unitMeasurement.Id))
+                    if (!BalanceExists(balance.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace ERPSystemDevelopment.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(unitMeasurement);
+            return View(balance);
         }
 
-        // GET: UnitMeasurements/Delete/5
+        // GET: Balances/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -125,34 +125,34 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var unitMeasurement = await _context.UnitMeasurements
+            var balance = await _context.Balances
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (unitMeasurement == null)
+            if (balance == null)
             {
                 return NotFound();
             }
 
-            return View(unitMeasurement);
+            return View(balance);
         }
 
-        // POST: UnitMeasurements/Delete/5
+        // POST: Balances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var unitMeasurement = await _context.UnitMeasurements.FindAsync(id);
-            if (unitMeasurement != null)
+            var balance = await _context.Balances.FindAsync(id);
+            if (balance != null)
             {
-                _context.UnitMeasurements.Remove(unitMeasurement);
+                _context.Balances.Remove(balance);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UnitMeasurementExists(Guid id)
+        private bool BalanceExists(Guid id)
         {
-            return _context.UnitMeasurements.Any(e => e.Id == id);
+            return _context.Balances.Any(e => e.Id == id);
         }
     }
 }

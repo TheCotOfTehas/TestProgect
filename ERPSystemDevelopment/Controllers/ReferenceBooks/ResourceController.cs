@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Resources;
 
-namespace ERPSystemDevelopment.Controllers
+namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
     public class ResourceController : Controller
     {

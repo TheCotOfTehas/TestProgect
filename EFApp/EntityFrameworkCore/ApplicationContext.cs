@@ -11,6 +11,7 @@ namespace EFApp.EntityFrameworkCore
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<DocumentReceipt> DocumentReceipts { get; set; } = null!;
         public DbSet<DocumentShipment> DocumentShipments { get; set; } = null!;
+        public DbSet<Balance> Balances { get; set; } = null!;
 
         public ApplicationContext()
         {

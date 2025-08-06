@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using EFApp.EntityFrameworkCore;
 using ManagementApplication;
 
-namespace ERPSystemDevelopment.Controllers
+namespace ERPSystemDevelopment.Controllers.Warehouse
 {
-    public class CustomersController : Controller
+    public class DocumentReceiptsController : Controller
     {
         private readonly ApplicationContext _context;
 
-        public CustomersController(ApplicationContext context)
+        public DocumentReceiptsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: DocumentReceipts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.DocumentReceipts.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: DocumentReceipts/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -33,40 +33,40 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var documentReceipt = await _context.DocumentReceipts
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (documentReceipt == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(documentReceipt);
         }
 
-        // GET: Customers/Create
+        // GET: DocumentReceipts/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: DocumentReceipts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Number,DateTime")] DocumentReceipt documentReceipt)
         {
             if (ModelState.IsValid)
             {
-                customer.Id = Guid.NewGuid();
-                _context.Add(customer);
+                documentReceipt.Id = Guid.NewGuid();
+                _context.Add(documentReceipt);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(documentReceipt);
         }
 
-        // GET: Customers/Edit/5
+        // GET: DocumentReceipts/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var documentReceipt = await _context.DocumentReceipts.FindAsync(id);
+            if (documentReceipt == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(documentReceipt);
         }
 
-        // POST: Customers/Edit/5
+        // POST: DocumentReceipts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] Customer customer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Number,DateTime")] DocumentReceipt documentReceipt)
         {
-            if (id != customer.Id)
+            if (id != documentReceipt.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace ERPSystemDevelopment.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(documentReceipt);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!DocumentReceiptExists(documentReceipt.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace ERPSystemDevelopment.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(documentReceipt);
         }
 
-        // GET: Customers/Delete/5
+        // GET: DocumentReceipts/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -125,34 +125,34 @@ namespace ERPSystemDevelopment.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var documentReceipt = await _context.DocumentReceipts
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (documentReceipt == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(documentReceipt);
         }
 
-        // POST: Customers/Delete/5
+        // POST: DocumentReceipts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer != null)
+            var documentReceipt = await _context.DocumentReceipts.FindAsync(id);
+            if (documentReceipt != null)
             {
-                _context.Customers.Remove(customer);
+                _context.DocumentReceipts.Remove(documentReceipt);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(Guid id)
+        private bool DocumentReceiptExists(Guid id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.DocumentReceipts.Any(e => e.Id == id);
         }
     }
 }

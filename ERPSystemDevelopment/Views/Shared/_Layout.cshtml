@@ -37,9 +37,9 @@
                     <li>
                         <a href="#warehouse" class="dropdown">Склад</a>
                         <ul>
-                            <li><a href="#" class="table-link">Баланс</a></li>
-                            <li><a href="#" class="table-link">Поступления</a></li>
-                            <li><a href="#" class="table-link">Отгрузки</a></li>
+                            <li><a asp-controller="Balances" asp-action="Index" class="table-link">Баланс</a></li>
+                            <li><a asp-controller="DocumentReceipts" asp-action="Index" class="table-link">Поступления</a></li>
+                            <li><a asp-controller="DocumentShipments" asp-action="Index" class="table-link">Отгрузки</a></li>
                         </ul>
                     </li>
                     <li>
@@ -58,7 +58,5 @@
 			@RenderBody()
 		</div>
 	</div>
-
-
 </body>
 </html>
