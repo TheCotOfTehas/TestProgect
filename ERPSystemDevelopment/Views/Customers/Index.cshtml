@@ -12,12 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -25,16 +22,32 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                <input type="text" asp-for="@item.Id" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                <input type="text" asp-for="@item.Name" />
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <input type="text" asp-for="@item.Status" />
             </td>
+                <td>
+                    <form method="post" asp-action="Edit">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Details">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">Details</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Delete">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
         </tr>
 }
     </tbody>

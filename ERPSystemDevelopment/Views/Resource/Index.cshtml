@@ -1,6 +1,14 @@
 ﻿@model IEnumerable<Resource>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
 <h2>Ресурсы</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 <table class="table">
     <thead>
@@ -23,12 +31,30 @@
                 <td>
                     <input type="text" asp-for="@resource.Status" />
                 </td>
+@*                 <td>
+                    <a asp-action="Edit" asp-route-id="@resource.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@resource.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@resource.Id">Delete</a>
+                </td> *@
                 <td>
                     <form method="post" asp-action="Edit">
                         <input type="hidden" name="id" value="@resource.Id" />
                         <button type="submit">Save</button>
                     </form>
                 </td>
+                <td>
+                    <form method="post" asp-action="Details">
+                        <input type="hidden" name="id" value="@resource.Id" />
+                        <button type="submit">Details</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" asp-action="Delete">
+                        <input type="hidden" name="id" value="@resource.Id" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+
             </tr>
         }
     </tbody>
