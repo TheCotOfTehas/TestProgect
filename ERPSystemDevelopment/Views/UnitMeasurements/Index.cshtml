@@ -23,30 +23,19 @@
         {
             <tr>
                 <td>
-                    <input type="text" asp-for="@unitMeasurement.Id" />
-                </td>
-                <td>
-                    <input type="text" asp-for="@unitMeasurement.Name" />
-                </td>
-                <td>
-                    <input type="text" asp-for="@unitMeasurement.Status" />
-                </td>
-                <td>
-                    <form method="post" asp-action="Edit">
-                        <input type="hidden" name="id" value="@unitMeasurement.Id" />
-                        <button type="submit">Save</button>
+                    <form method="post" asp-action="Edit" style="display:inline;">
+                        <input type="text" name="Id" value="@unitMeasurement.Id" />
+                        <input type="text" name="Name" value="@unitMeasurement.Name" />
+                        <input type="text" name="Status" value="@unitMeasurement.Status" />
+                        <button type="submit">Сохранить</button>
                     </form>
-                </td>
-                <td>
-                    <form method="post" asp-action="Details">
+                    <form method="post" asp-action="Details" style="display:inline;">
                         <input type="hidden" name="id" value="@unitMeasurement.Id" />
-                        <button type="submit">Details</button>
+                        <button type="submit">Детали</button>
                     </form>
-                </td>
-                <td>
-                    <form method="post" asp-action="Delete">
+                    <form method="post" asp-action="Delete" style="display:inline;">
                         <input type="hidden" name="id" value="@unitMeasurement.Id" />
-                        <button type="submit">Delete</button>
+                        <button type="submit">Удалить</button>
                     </form>
                 </td>
             </tr>
