@@ -7,29 +7,29 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication.Services
 {
-    internal class WarehouseService : IWarehouseService
+    internal class BaseEntityService : IBaseEntityService
     {
-        public ResourceReceipt GetByCustomer(string name)
+        public IBaseEntity Create()
         {
             throw new NotImplementedException();
         }
 
-        public ResourceShipment GetByData(string name)
+        public void Delete()
         {
             throw new NotImplementedException();
         }
 
-        public ResourceReceipt GetByNumber(string name)
+        public IBaseEntity Edit()
         {
             throw new NotImplementedException();
         }
 
-        public ResourceShipment GetByResource(string name)
+        public IEnumerable<IBaseEntity> GetAllByName()
         {
             throw new NotImplementedException();
         }
 
-        public ResourceReceipt GetByUnit(string name)
+        public IEnumerable<IBaseEntity> GetAllByStatus()
         {
             throw new NotImplementedException();
         }

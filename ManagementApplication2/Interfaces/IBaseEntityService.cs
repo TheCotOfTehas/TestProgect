@@ -8,9 +8,9 @@ namespace ManagementApplication.Interfaces
 {
     public interface IBaseEntityService
     {
-        public IEnumerable<IBaseEntity> Create();
-        public IEnumerable<IBaseEntity> Delete();
-        public IEnumerable<IBaseEntity> Edit();
+        public IBaseEntity Create();
+        public void Delete();
+        public IBaseEntity Edit();
         public IEnumerable<IBaseEntity> GetAllByName();
         public IEnumerable<IBaseEntity> GetAllByStatus();
     }
