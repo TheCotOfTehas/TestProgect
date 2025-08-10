@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFApp", "EFApp\EFApp.csproj
 		{030476C6-B5B3-4422-9851-23F34F0DF471} = {030476C6-B5B3-4422-9851-23F34F0DF471}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.Test", "TestProjectXUnit\TestTask.Test.csproj", "{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{F6892042-1FB8-4F80-8DFA-D74508619C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6892042-1FB8-4F80-8DFA-D74508619C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6892042-1FB8-4F80-8DFA-D74508619C1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{030476C6-B5B3-4422-9851-23F34F0DF471} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{F6892042-1FB8-4F80-8DFA-D74508619C1F} = {23A1A959-CBA3-43F0-83D5-E5CABE77718B}
+		{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D84F8ED-C633-471B-85CF-21F1437BFB94}
