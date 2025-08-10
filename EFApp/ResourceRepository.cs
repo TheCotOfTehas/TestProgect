@@ -1,29 +1,18 @@
-﻿using ManagementApplication.Interfaces;
+﻿using ManagementApplication;
+using ManagementApplication.BaseEntity;
+using ManagementApplication.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagementApplication.Services
+namespace EFApp
 {
-    internal class DocumentService : IDocumentService
+    internal class ResourceRepository : IDocumentRepository
     {
-        public IDocument Create()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IDocument Edit()
-        {
-            throw new NotImplementedException();
-        }
-
+        public List<ResourceReceipt> resourceReceipts { get; set; }
+        public List<ResourceShipment> resourceShipments { get; set; }
         public IEnumerable<ResourceReceipt> GetByCustomer(string name)
         {
             throw new NotImplementedException();

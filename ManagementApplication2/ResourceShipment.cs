@@ -12,8 +12,9 @@ namespace ManagementApplication
         [Required]
         public Guid Id { get; set; }
 
-        public Guid ResourceId { get; set; }
-        public Guid UnitId { get; set; }
-        public double Amount { get; set; }
+        public int Number { get; set; }
+        public Guid CustomerId { get; set; }
+        public DateTime Date { get; set; }
+        public StatusTD Status { get; set; }
     }
 }

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication.Interfaces
 {
-    public interface IBaseEntityService
+    public interface IBaseEntityRepository
     {
-        public IBaseEntity Create();
-        public void Delete();
-        public IBaseEntity Edit();
         public IEnumerable<IBaseEntity> GetAllByName();
         public IEnumerable<IBaseEntity> GetAllByStatus();
     }

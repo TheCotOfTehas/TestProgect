@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication.Interfaces
 {
-    public interface IDocumentService
+    public interface IDocumentRepository
     {
-        public IDocument Create();
-        public void Delete();
-        public IDocument Edit();
         public IEnumerable<ResourceShipment> GetByData(string name);
         public IEnumerable<ResourceShipment> GetByResource(string name);
         public IEnumerable<ResourceReceipt> GetByNumber(string name);

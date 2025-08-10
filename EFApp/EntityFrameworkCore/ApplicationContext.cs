@@ -32,6 +32,7 @@ namespace EFApp.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
+            SeedData(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
@@ -40,28 +41,28 @@ namespace EFApp.EntityFrameworkCore
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
         }
 
-        //private void SeedData(ModelBuilder modelBuilder)
-        //{
-        //    // Заполнение таблицы UnitMeasurements
-        //    modelBuilder.Entity<UnitMeasurement>().HasData(
-        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
-        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
-        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
-        //    );
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            // Заполнение таблицы UnitMeasurements
+            modelBuilder.Entity<UnitMeasurement>().HasData(
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
+            );
 
-        //    // Заполнение таблицы Resources
-        //    modelBuilder.Entity<Resource>().HasData(
-        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
-        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
-        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
-        //    );
+            // Заполнение таблицы Resources
+            modelBuilder.Entity<Resource>().HasData(
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
+            );
 
-        //    // Заполнение таблицы Customers
-        //    modelBuilder.Entity<Customer>().HasData(
-        //        new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success },
-        //        new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success },
-        //        new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success }
-        //    );
-        //}
+            // Заполнение таблицы Customers
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success, AddressCustomer = "Тест1" },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success, AddressCustomer = "Тест2" },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success, AddressCustomer = "Тест3" }
+            );
+        }
     }
 }
