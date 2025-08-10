@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagementApplication.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

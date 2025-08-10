@@ -59,8 +59,13 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             if (ModelState.IsValid)
             {
                 unitMeasurement.Id = Guid.NewGuid();
-                _context.Add(unitMeasurement);
-                await _context.SaveChangesAsync();
+
+                if (!_context.UnitMeasurements.Contains(unitMeasurement))
+                {
+                    _context.Add(unitMeasurement);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(unitMeasurement);

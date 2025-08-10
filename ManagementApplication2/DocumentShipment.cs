@@ -18,5 +18,5 @@ namespace ManagementApplication
         public Guid CustomerID { get; set; }
 
         public StatusTD Status { get; set; }
-}
+    }
 }

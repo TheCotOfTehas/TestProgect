@@ -30,12 +30,34 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateTime)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+
         </tr>
 }
+    </tbody>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <form method="post" asp-action="Edit">
+                <td>
+                    <input type="text" name="Id" value="@item.Id" />
+                </td>
+                <td>
+                    <input type="text" name="Name" value="@item.Number" />
+                </td>
+                <td>
+                    <input type="text" name="Status" value="@item.DateTime" />
+                </td>
+                <td>
+                    <button type="submit">Сохранить</button>
+                </td>
+                </form>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
