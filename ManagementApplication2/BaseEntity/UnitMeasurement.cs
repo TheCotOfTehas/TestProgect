@@ -1,5 +1,4 @@
 ﻿using ManagementApplication.Interfaces;
-using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagementApplication
+namespace ManagementApplication.BaseEntity
 {
-    public class DocumentReceipt : IDocument
+    public class UnitMeasurement : IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }
-        public int Number { get; set; }
-        public DateTime DateTime { get; set; }
+        public string Name { get; set; }
+        public StatusTD Status { get; set; }
     }
 }

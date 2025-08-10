@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagementApplication
+namespace ManagementApplication.Document
 {
     public class DocumentShipment : IDocument
     {
@@ -14,7 +14,6 @@ namespace ManagementApplication
         public Guid Id { get; set; }
         public int Number { get; set; }
         public DateTime DateTime { get; set; }
-
         public Guid CustomerID { get; set; }
 
         public StatusTD Status { get; set; }

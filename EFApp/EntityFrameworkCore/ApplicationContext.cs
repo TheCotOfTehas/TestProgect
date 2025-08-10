@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using ManagementApplication;
+using ManagementApplication.BaseEntity;
+using ManagementApplication.Document;
 
 namespace EFApp.EntityFrameworkCore
 {
@@ -9,9 +11,13 @@ namespace EFApp.EntityFrameworkCore
         public DbSet<Resource> Resources { get; set; } = null!;
         public DbSet<UnitMeasurement> UnitMeasurements { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
-        public DbSet<DocumentReceipt> DocumentReceipts { get; set; } = null!;
-        public DbSet<DocumentShipment> DocumentShipments { get; set; } = null!;
         public DbSet<Balance> Balances { get; set; } = null!;
+        public DbSet<DocumentReceipt> DocumentReceipts { get; set; } = null!;
+        public DbSet<ResourceReceipt> ResourcesReceipts { get; set; } = null!;
+        public DbSet<DocumentShipment> DocumentShipments { get; set; } = null!;
+        public DbSet<ResourceShipment> ResourceShipments { get; set; } = null!;
+
+
 
         public ApplicationContext()
         {
@@ -26,65 +32,6 @@ namespace EFApp.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
-            OnModelCreatingResourceReceipt(modelBuilder);
-            OnModelCreatingResourceShipment(modelBuilder);
-            SeedData(modelBuilder);
-        }
-
-        protected void OnModelCreatingResourceReceipt(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Resource>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Status).IsRequired();
-
-                entity.HasMany<ResourceReceipt>()
-                      .WithOne() // Здесь не создаем обратную связь
-                      .HasForeignKey(rr => rr.ResourceId);
-            });
-
-            modelBuilder.Entity<UnitMeasurement>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Status).IsRequired();
-
-                entity.HasMany<ResourceReceipt>()
-                      .WithOne() // Здесь не создаем обратную связь
-                      .HasForeignKey(rr => rr.UnitId);
-            });
-
-            modelBuilder.Entity<ResourceReceipt>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Amount).IsRequired();
-
-                // Сопоставление с Resource и UnitMeasurement
-                entity.HasOne<Resource>()
-                      .WithMany(rr => rr.ResourceReceipts)
-                      .HasForeignKey(rr => rr.ResourceId);
-
-                entity.HasOne<UnitMeasurement>()
-                      .WithMany(rr => rr.ResourceReceipts)
-                      .HasForeignKey(rr => rr.UnitId);
-            });
-        }
-
-        protected void OnModelCreatingResourceShipment(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ResourceShipment>(entity =>
-            {
-                entity.HasKey(rs => rs.Id);
-
-                entity.HasOne(rs => rs.Resource)
-                      .WithMany(r => r.ResourceShipments)
-                      .HasForeignKey(rs => rs.ResourceId);
-
-                entity.HasOne(rs => rs.UnitMeasurement)
-                      .WithMany(um => um.ResourceShipments) 
-                      .HasForeignKey(rs => rs.UnitId);
-            });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
@@ -93,28 +40,28 @@ namespace EFApp.EntityFrameworkCore
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
         }
 
-        private void SeedData(ModelBuilder modelBuilder)
-        {
-            // Заполнение таблицы UnitMeasurements
-            modelBuilder.Entity<UnitMeasurement>().HasData(
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
-            );
+        //private void SeedData(ModelBuilder modelBuilder)
+        //{
+        //    // Заполнение таблицы UnitMeasurements
+        //    modelBuilder.Entity<UnitMeasurement>().HasData(
+        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
+        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
+        //        new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
+        //    );
 
-            // Заполнение таблицы Resources
-            modelBuilder.Entity<Resource>().HasData(
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
-            );
+        //    // Заполнение таблицы Resources
+        //    modelBuilder.Entity<Resource>().HasData(
+        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
+        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
+        //        new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
+        //    );
 
-            // Заполнение таблицы Customers
-            modelBuilder.Entity<Customer>().HasData(
-                new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success },
-                new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success },
-                new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success }
-            );
-        }
+        //    // Заполнение таблицы Customers
+        //    modelBuilder.Entity<Customer>().HasData(
+        //        new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success },
+        //        new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success },
+        //        new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success }
+        //    );
+        //}
     }
 }

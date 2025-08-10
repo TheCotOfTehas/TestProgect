@@ -6,13 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagementApplication
+namespace ManagementApplication.BaseEntity
 {
-    public class Resource : IBaseEntity
+    public class Customer : IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }
-        public string Name { get; set; } 
+        public Address AddressCustomer { get; set; }
+        
+        public string Name { get; set; }
         public StatusTD Status { get; set; }
     }
 }

@@ -15,9 +15,5 @@ namespace ManagementApplication
         public Guid ResourceId { get; set; }
         public Guid UnitId { get; set; }
         public double Amount { get; set; }
-
-        // Навигационные свойства
-        public Resource Resource { get; set; }
-        public UnitMeasurement UnitMeasurement { get; set; }
     }
 }

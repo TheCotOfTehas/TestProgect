@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ManagementApplication
 {
-    public class ResourceReceipt
+    public class ResourceReceipt//получене
     {
         [Required]
         public Guid Id { get; set; }

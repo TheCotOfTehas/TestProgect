@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ManagementApplication
+namespace ManagementApplication.BaseEntity
 {
-    public class UnitMeasurement : IBaseEntity
+    public class Resource : IBaseEntity
     {
         [Required]
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } 
         public StatusTD Status { get; set; }
     }
 }

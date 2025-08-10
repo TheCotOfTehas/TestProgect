@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EFApp.EntityFrameworkCore;
-using ManagementApplication;
+using ManagementApplication.BaseEntity;
 
 namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
