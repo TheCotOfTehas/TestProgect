@@ -49,6 +49,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View();
         }
 
+
         // POST: Customers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -82,19 +83,21 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View(customer);
         }
 
+
+
         // POST: Customers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] Customer customer)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status,AddressCustomer")] Customer customer)
         {
             if (id != customer.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)//Я Тут принимаю значение на сохранение
             {
                 try
                 {

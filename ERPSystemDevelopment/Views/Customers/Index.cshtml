@@ -8,15 +8,15 @@
 <h1>Покупатели</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Создать нового</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Status</th>
+            <th></th>
             <th>Action</th>
         </tr>
     </thead>
@@ -25,22 +25,13 @@
         {
             <tr>
                 <form method="post" asp-action="Edit">
-                    <td>
-                        <input type="text" name="Id" value="@item.Id" />
-                    </td>
-                    <td>
-                        <input type="text" name="Name" value="@item.Name" />
-                    </td>
-                    <td>
-                    @Html.DropDownList("Status ", Html.GetEnumSelectList(typeof(StatusTD)))
-                    </td> 
-                    <td>
-                        <button type="submit">Сохранить</button>
-                    </td>
+                    <input type="hidden" name="Id" value="@item.Id" />
+                    <td><input type="text" name="Name" value="@item.Name" /></td>
+                    <td>@Html.DropDownList("Status", new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }), item.Status.ToString())</td>
+                    <td><input type="hidden" name="AddressCustomer" value="@item.AddressCustomer" /></td>
+                    <td><button type="submit">Сохранить</button></td>
                 </form>
-
             </tr>
-        }
-       
+        }       
     </tbody>
 </table>
