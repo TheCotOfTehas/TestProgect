@@ -32,13 +32,15 @@
                         <input type="text" name="Name" value="@item.Name" />
                     </td>
                     <td>
-                        <input type="text" name="Status" value="@item.Status" />
-                    </td>
+                    @Html.DropDownList("Status ", Html.GetEnumSelectList(typeof(StatusTD)))
+                    </td> 
                     <td>
                         <button type="submit">Сохранить</button>
                     </td>
                 </form>
+
             </tr>
         }
+       
     </tbody>
 </table>

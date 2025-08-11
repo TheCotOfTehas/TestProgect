@@ -17,7 +17,8 @@ namespace ERPSystemDevelopment
             builder.Services.AddRazorPages();
 
             builder.Services.AddDbContext<ApplicationContext>(x =>
-                x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;"));
+                 //x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;")); //Это у меня на компе
+                 x.UseSqlServer(@"Server=ms-sql-10.in-solve.ru;Database=1gb_granddb;User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;"));//это на серваке
 
             var app = builder.Build();
 

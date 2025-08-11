@@ -54,7 +54,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Name,AddressCustomer,Status")] Customer customer)
         {
             if (ModelState.IsValid)
             {

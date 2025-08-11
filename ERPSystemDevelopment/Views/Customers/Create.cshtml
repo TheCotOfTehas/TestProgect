@@ -1,4 +1,5 @@
 ﻿@using ManagementApplication.BaseEntity
+@using ManagementApplication
 @model Customer
 
 @{
@@ -19,9 +20,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <label asp-for="AddressCustomer" class="control-label"></label>
+                <input asp-for="AddressCustomer" class="form-control" />
+                <span asp-validation-for="AddressCustomer" class="text-danger"></span>
+            </div>
+            <div>
+                @Html.DropDownList("Status", new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }), "Выберите Статус")
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -34,6 +38,21 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+@* <div class="form-group">
+    <label asp-for="Status" class="control-label"></label>
+    <select asp-for="Status" class="form-control" asp-items="ViewBag.StatusOptions"></select>
+    <span asp-validation-for="Status" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label>Статус</label>
+    @foreach (var s in Enum.GetValues(typeof(StatusTD)).Cast<StatusTD>())
+    {
+        <div class="form-check">
+            <input class="form-check-input" type="radio" asp-for="Status" value="@( (int)s )" />
+            <label class="form-check-label">@s</label>
+        </div>
+    }
+    <span asp-validation-for="Status" class="text-danger"></span>
+</div>
+ *@
