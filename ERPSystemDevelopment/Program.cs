@@ -1,5 +1,6 @@
 using EFApp;
 using EFApp.EntityFrameworkCore;
+using ERPSystemDevelopment.Controllers;
 using ManagementApplication;
 using ManagementApplication.BaseEntity;
 using ManagementApplication.Interfaces;
@@ -25,7 +26,7 @@ namespace ERPSystemDevelopment
                  x.UseSqlServer(@"Server=ms-sql-10.in-solve.ru;Database=1gb_granddb;User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;"));//это на серваке
 
             
-            //builder.Services.AddScoped<BaseEntityService<Customer>>();
+            builder.Services.AddScoped<MyService>();
 
 
             var app = builder.Build();
