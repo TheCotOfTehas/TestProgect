@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EFApp.EntityFrameworkCore;
+using Humanizer.Localisation;
+using ManagementApplication.BaseEntity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EFApp.EntityFrameworkCore;
-using ManagementApplication.BaseEntity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
@@ -19,41 +20,17 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _context = context;
         }
 
-        // GET: Resources
         public async Task<IActionResult> Index()
         {
             return View(await _context.Resources.ToListAsync());
         }
 
-        // GET: Resources/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resource = await _context.Resources
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (resource == null)
-            {
-                return NotFound();
-            }
-
-            return View(resource);
-        }
-
-        // GET: Resources/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Resources/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Status")] Resource resource)
         {
             if (ModelState.IsValid)
@@ -66,40 +43,27 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View(resource);
         }
 
-        // GET: Resources/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resource = await _context.Resources.FindAsync(id);
-            if (resource == null)
-            {
-                return NotFound();
-            }
-            return View(resource);
-        }
-
-        // POST: Resources/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] Resource resource)
+        public async Task<IActionResult> Edit(Resource resource)
         {
-            if (id != resource.Id)
+            var existingCustomer = await _context.Resources.FindAsync(resource.Id);
+            if (existingCustomer == null) return NotFound();
+            bool hasChanges = false;
+
+            if (existingCustomer.Name != resource.Name || existingCustomer.Status != resource.Status)
             {
-                return NotFound();
+                existingCustomer.Name = resource.Name;
+                existingCustomer.Status = resource.Status;
+                hasChanges = true;
             }
 
-            if (ModelState.IsValid)
+            if (hasChanges)
             {
                 try
                 {
-                    _context.Update(resource);
+                    _context.Update(existingCustomer);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -112,12 +76,11 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(resource);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Resources/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -125,19 +88,17 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
                 return NotFound();
             }
 
-            var resource = await _context.Resources
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (resource == null)
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(resource);
+            return View(customer);
         }
 
-        // POST: Resources/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var resource = await _context.Resources.FindAsync(id);

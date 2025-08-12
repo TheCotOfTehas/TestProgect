@@ -16,7 +16,8 @@
         <tr>
             <th>Name</th>
             <th>Status</th>
-            <th>Action</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -25,11 +26,19 @@
             <tr>
                 <form method="post" asp-action="Edit">
                     <input type="hidden" name="Id" value="@item.Id" />
-                    <td><input type="text" name="Name" value="@item.Name" /></td>
-                    <td>@Html.DropDownList("Status", new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }), item.Status.ToString())</td>
-                    <td><button type="submit">Сохранить</button></td>
-                </form>
-            </tr>
-        }
+                <td><input type="text" name="Name" value="@item.Name" /></td>
+                <td>
+                    @Html.DropDownList("Status",
+                    new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }, item.Status.ToString()),
+                                new { @class = "form-control" })
+            </td>
+            <td><button type="submit">Сохранить</button></td>
+            </form>
+            <form method="post" asp-action="Delete">
+                <input type="hidden" name="Id" value="@item.Id" />
+            <td><button type="submit">Удалить</button></td>
+            </form>
+        </tr>
+                }
     </tbody>
 </table>

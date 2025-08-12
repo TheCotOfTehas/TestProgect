@@ -19,89 +19,50 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _context = context;
         }
 
-        // GET: UnitMeasurements
         public async Task<IActionResult> Index()
         {
             return View(await _context.UnitMeasurements.ToListAsync());
         }
 
-        // GET: UnitMeasurements/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var unitMeasurement = await _context.UnitMeasurements
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (unitMeasurement == null)
-            {
-                return NotFound();
-            }
-
-            return View(unitMeasurement);
-        }
-
-        // GET: UnitMeasurements/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: UnitMeasurements/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
         {
             if (ModelState.IsValid)
             {
                 unitMeasurement.Id = Guid.NewGuid();
-
-                if (!_context.UnitMeasurements.Contains(unitMeasurement))
-                {
-                    _context.Add(unitMeasurement);
-                    await _context.SaveChangesAsync();
-                }
-
+                _context.Add(unitMeasurement);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(unitMeasurement);
         }
 
-        // GET: UnitMeasurements/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var unitMeasurement = await _context.UnitMeasurements.FindAsync(id);
-            if (unitMeasurement == null)
-            {
-                return NotFound();
-            }
-            return View(unitMeasurement);
-        }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
+        public async Task<IActionResult> Edit(UnitMeasurement unitMeasurement)
         {
-            if (id != unitMeasurement.Id)
+            var existingUnitMeasurement = await _context.UnitMeasurements.FindAsync(unitMeasurement.Id);
+            if (existingUnitMeasurement == null) return NotFound();
+            bool hasChanges = false;
+
+            if (existingUnitMeasurement.Name != unitMeasurement.Name || existingUnitMeasurement.Status != unitMeasurement.Status)
             {
-                return NotFound();
+                existingUnitMeasurement.Name = unitMeasurement.Name;
+                existingUnitMeasurement.Status = unitMeasurement.Status;
+                hasChanges = true;
             }
 
-            if (ModelState.IsValid)
+            if (hasChanges)
             {
                 try
                 {
-                    _context.Update(unitMeasurement);
+                    _context.Update(existingUnitMeasurement);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,12 +75,11 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(unitMeasurement);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: UnitMeasurements/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -127,7 +87,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
                 return NotFound();
             }
 
-            var unitMeasurement = await _context.UnitMeasurements
+            var unitMeasurement = await _context.Customers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (unitMeasurement == null)
             {
@@ -137,9 +97,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View(unitMeasurement);
         }
 
-        // POST: UnitMeasurements/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var unitMeasurement = await _context.UnitMeasurements.FindAsync(id);

@@ -19,42 +19,17 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _context = context;
         }
 
-        // GET: Customers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Customers.ToListAsync());
         }
 
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return View(customer);
-        }
-
-        // GET: Customers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-
-        // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,AddressCustomer,Status")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -67,42 +42,27 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View(customer);
         }
 
-        // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return View(customer);
-        }
-
-
-
-        // POST: Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Status,AddressCustomer")] Customer customer)
+        public async Task<IActionResult> Edit(Customer customer)
         {
-            if (id != customer.Id)
+            var existingCustomer = await _context.Customers.FindAsync(customer.Id);
+            if (existingCustomer == null) return NotFound();
+            bool hasChanges = false;
+
+            if (existingCustomer.Name != customer.Name || existingCustomer.Status != customer.Status)
             {
-                return NotFound();
+                existingCustomer.Name = customer.Name;
+                existingCustomer.Status = customer.Status;
+                hasChanges = true;
             }
 
-            if (ModelState.IsValid)//Я Тут принимаю значение на сохранение
+            if (hasChanges)
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(existingCustomer);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -115,12 +75,11 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -138,9 +97,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             return View(customer);
         }
 
-        // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var customer = await _context.Customers.FindAsync(id);
