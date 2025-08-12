@@ -9,8 +9,8 @@ namespace ManagementApplication.Interfaces
     public interface IBaseEntityService<T> where T : IBaseEntity
     {
         public T Create(string name, StatusTD status);
-        public void Delete();
-        public IEnumerable<T> GetAllByName();
-        public IEnumerable<T> GetAllByStatus();
+        public void Delete(Guid id);
+        public IEnumerable<T> GetAllByName(string name);
+        public IEnumerable<T> GetAllByStatus(StatusTD status);
     }
 }

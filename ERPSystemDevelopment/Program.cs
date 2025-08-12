@@ -1,7 +1,11 @@
+using EFApp;
 using EFApp.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using ManagementApplication;
+using ManagementApplication.BaseEntity;
+using ManagementApplication.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Configuration;
 
 namespace ERPSystemDevelopment
 {
@@ -19,6 +23,10 @@ namespace ERPSystemDevelopment
             builder.Services.AddDbContext<ApplicationContext>(x =>
                  //x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;")); //Это у меня на компе
                  x.UseSqlServer(@"Server=ms-sql-10.in-solve.ru;Database=1gb_granddb;User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;"));//это на серваке
+
+            
+            //builder.Services.AddScoped<BaseEntityService<Customer>>();
+
 
             var app = builder.Build();
 
