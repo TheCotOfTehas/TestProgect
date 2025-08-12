@@ -26,7 +26,8 @@ namespace ERPSystemDevelopment
                  x.UseSqlServer(@"Server=ms-sql-10.in-solve.ru;Database=1gb_granddb;User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;"));//это на серваке
 
             
-            builder.Services.AddScoped<MyService>();
+            builder.Services.AddScoped<BaseEntityService<Customer>>();
+
 
 
             var app = builder.Build();
