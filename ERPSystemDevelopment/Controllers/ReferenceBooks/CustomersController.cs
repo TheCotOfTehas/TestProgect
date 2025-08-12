@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using EFApp.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using ManagementApplication.BaseEntity;
 using ManagementApplication.Interfaces;
 using EFApp;

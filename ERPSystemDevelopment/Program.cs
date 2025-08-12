@@ -27,6 +27,8 @@ namespace ERPSystemDevelopment
 
             
             builder.Services.AddScoped<BaseEntityService<Customer>>();
+            builder.Services.AddScoped<BaseEntityService<Resource>>();
+            builder.Services.AddScoped<BaseEntityService<UnitMeasurement>>();
 
 
 

@@ -1,27 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EFApp;
+using EFApp.EntityFrameworkCore;
+using ManagementApplication.BaseEntity;
+using ManagementApplication.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EFApp.EntityFrameworkCore;
-using ManagementApplication.BaseEntity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
     public class UnitMeasurementsController : Controller
     {
-        private readonly ApplicationContext _context;
+        private readonly IBaseEntityService<UnitMeasurement> _baseEntityService;
 
-        public UnitMeasurementsController(ApplicationContext context)
+        public UnitMeasurementsController(BaseEntityService<UnitMeasurement> baseEntityService)
         {
-            _context = context;
+            _baseEntityService = baseEntityService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.UnitMeasurements.ToListAsync());
+            var allEntity = _baseEntityService.GetAllByName();
+            return View(allEntity);
         }
 
         public IActionResult Create()
@@ -32,87 +35,23 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
         {
-            if (ModelState.IsValid)
-            {
-                unitMeasurement.Id = Guid.NewGuid();
-                _context.Add(unitMeasurement);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(unitMeasurement);
+            _baseEntityService.Create(unitMeasurement);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UnitMeasurement unitMeasurement)
+        public IActionResult Edit(UnitMeasurement unitMeasurement)
         {
-            var existingUnitMeasurement = await _context.UnitMeasurements.FindAsync(unitMeasurement.Id);
-            if (existingUnitMeasurement == null) return NotFound();
-            bool hasChanges = false;
-
-            if (existingUnitMeasurement.Name != unitMeasurement.Name || existingUnitMeasurement.Status != unitMeasurement.Status)
-            {
-                existingUnitMeasurement.Name = unitMeasurement.Name;
-                existingUnitMeasurement.Status = unitMeasurement.Status;
-                hasChanges = true;
-            }
-
-            if (hasChanges)
-            {
-                try
-                {
-                    _context.Update(existingUnitMeasurement);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UnitMeasurementExists(unitMeasurement.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-
+            var existingUnitMeasurement = _baseEntityService.Edit(unitMeasurement);
+            if (!existingUnitMeasurement) return NotFound();
             return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var unitMeasurement = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (unitMeasurement == null)
-            {
-                return NotFound();
-            }
-
-            return View(unitMeasurement);
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public IActionResult DeleteConfirmed(Guid id)
         {
-            var unitMeasurement = await _context.UnitMeasurements.FindAsync(id);
-            if (unitMeasurement != null)
-            {
-                _context.UnitMeasurements.Remove(unitMeasurement);
-            }
-
-            await _context.SaveChangesAsync();
+            _baseEntityService.Delete(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool UnitMeasurementExists(Guid id)
-        {
-            return _context.UnitMeasurements.Any(e => e.Id == id);
         }
     }
 }
