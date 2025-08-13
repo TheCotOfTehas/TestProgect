@@ -12,7 +12,7 @@ namespace ManagementApplication.BaseEntity
     {
         [Required]
         public Guid Id { get; set; }
-        public string? AddressCustomer { get; set; } = null;
+        public string? AddressCustomer { get; set; } = "Не определён";
         
         public string Name { get; set; }
         public StatusTD Status { get; set; }

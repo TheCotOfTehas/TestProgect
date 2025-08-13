@@ -29,7 +29,7 @@ namespace EFApp
             {
                 Id = Guid.NewGuid(),
                 Name = name,
-                Status = status
+                Status = status,
             };
 
             _context.Set<T>().Add(item);

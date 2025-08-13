@@ -10,6 +10,7 @@ namespace TestProjectXUnit
 {
     public class UnitTest1
     {
+        //переед проверкой отключить автозаполнение начальными данными  SeedData в ApplicationContext
 
         [Fact]
         public void CannotCreateIf_AlreadyExists()
@@ -19,10 +20,20 @@ namespace TestProjectXUnit
 
         private ApplicationContext GetInMemoryContext()
         {
+            var dbName = "TestDb_" + Guid.NewGuid().ToString("N"); // Уникальное имя базы для каждого теста
+            var connectionString = $"Server=ms-sql-10.in-solve.ru;Database={dbName};User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;";
+
             var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseSqlServer(connectionString)
                 .Options;
-            return new ApplicationContext(options);
+
+            var context = new ApplicationContext(options);
+
+            // Создаем базу с нужной схемой
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            return context;
         }
 
         [Fact]
@@ -32,10 +43,12 @@ namespace TestProjectXUnit
             var service = new BaseEntityService<Customer>(context);
 
             var item = service.Create("TestName", StatusTD.Active);
+            item.AddressCustomer = "ХАНТЫМАНСИЙСК";
 
             Assert.NotNull(item);
             Assert.Equal("TestName", item.Name);
             Assert.Equal(StatusTD.Active, item.Status);
+            Assert.Equal("ХАНТЫМАНСИЙСК", item.AddressCustomer);
             Assert.NotEqual(Guid.Empty, item.Id);
             Assert.Single(context.Set<Customer>());
         }
