@@ -1,13 +1,9 @@
 using EFApp;
 using EFApp.EntityFrameworkCore;
-using ERPSystemDevelopment.Controllers;
-using ManagementApplication;
 using ManagementApplication.BaseEntity;
-using ManagementApplication.Interfaces;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Configuration;
-using System.Threading.Tasks;
+
 
 namespace ERPSystemDevelopment
 {
@@ -20,28 +16,72 @@ namespace ERPSystemDevelopment
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnection"); //или дома "DefaultConnectionHome"
+            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnectionHome"); //или дома "DefaultConnectionHome"
             builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            builder.Services.AddDbContext<ApplicationContext>();
 
             builder.Services.AddScoped<BaseEntityService<Customer>>();
             builder.Services.AddScoped<BaseEntityService<Resource>>();
             builder.Services.AddScoped<BaseEntityService<UnitMeasurement>>();
 
-
-
             var app = builder.Build();
 
+            var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
+
+            //Настройку логирование ранее не делал взял готовую.
+            //У меня сайт не запускался не мог понять почему
+            //В итоге у меня обращенеи к базе было определено и в программ и в контесте и
+            //всё время работал со своей. Ща пытаюсь настроить. так как из-за этого
+            // не запускался сайт.
+
+            #region
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
+                // Глобальный обработчик ошибок - для продакшен среды
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "text/html";
+
+                        var exceptionHandlerPathFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+
+                        if (exceptionHandlerPathFeature?.Error != null)
+                        {
+                            // Логируем ошибку
+                            logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled exception occurred");
+
+                            // Можно вывести простую страницу с сообщением об ошибке
+                            await context.Response.WriteAsync("<html><body>\r\n");
+                            await context.Response.WriteAsync("Произошла внутренняя ошибка сервера.<br><br>\r\n");
+
+                            // В продакшене не выводим подробности ошибки, но в dev можно добавить
+                            if (app.Environment.IsDevelopment())
+                            {
+                                await context.Response.WriteAsync($"<div>{exceptionHandlerPathFeature.Error.Message}</div>\r\n");
+                            }
+
+                            await context.Response.WriteAsync("</body></html>\r\n");
+                        }
+                    });
+                });
+
                 app.UseHsts();
             }
-
-            using (ApplicationContext db = new ApplicationContext())
+            else
             {
+                // В режиме разработки включаем подробные страницы ошибок
+                app.UseDeveloperExceptionPage();
             }
+            #endregion
+
+
+
+
 
             app.UseHttpsRedirection();
 
@@ -57,7 +97,7 @@ namespace ERPSystemDevelopment
             //регистрируем нужные маршруты
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

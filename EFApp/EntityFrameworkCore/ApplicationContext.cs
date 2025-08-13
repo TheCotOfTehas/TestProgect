@@ -8,6 +8,8 @@ namespace EFApp.EntityFrameworkCore
 {
     public partial class ApplicationContext : DbContext
     {
+        private readonly string _connectionString;
+
         public DbSet<Resource> Resources { get; set; } = null!;
         public DbSet<UnitMeasurement> UnitMeasurements { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
@@ -24,9 +26,9 @@ namespace EFApp.EntityFrameworkCore
             Database.EnsureDeleted();
             Database.EnsureCreated();
         }
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) 
+            : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,7 +40,12 @@ namespace EFApp.EntityFrameworkCore
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
+            // Если опции не настроены - настроим из _connectionString
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_connectionString);
+            }
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
         }
 
         private void SeedData(ModelBuilder modelBuilder)
