@@ -2,6 +2,7 @@
 using ManagementApplication.BaseEntity;
 using ManagementApplication.Interfaces;
 using EFApp;
+using System.Threading.Tasks;
 
 namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
@@ -14,9 +15,9 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _baseEntityService = baseEntityService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var allEntity = _baseEntityService.GetAllByName();
+            var allEntity = await _baseEntityService.GetAllByNameAsync();
             return View(allEntity);
         }
 
@@ -28,24 +29,24 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Name,AddressCustomer,Status")] Customer customer)
         {
-            var newCustomer = _baseEntityService.Create(customer);
+            var newCustomer = await _baseEntityService.CreateAsync(customer);
             newCustomer.AddressCustomer = customer.AddressCustomer;
-            _baseEntityService.SaveChanges();
+            await _baseEntityService.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult Edit(Customer customer)
+        public async Task<IActionResult> EditAsync(Customer customer)
         {
-            var existingCustomer = _baseEntityService.Edit(customer);
+            var existingCustomer = await _baseEntityService.EditAsync(customer);
             if (!existingCustomer) return NotFound();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _baseEntityService.Delete(id);
+            await _baseEntityService.ArchiveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

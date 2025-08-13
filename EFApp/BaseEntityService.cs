@@ -23,7 +23,7 @@ namespace EFApp
         }
 
 
-        public T Create(string name, StatusTD status)
+        public async Task<T> CreateAsync(string name, StatusTD status)
         {
             var item = new T()
             {
@@ -32,12 +32,12 @@ namespace EFApp
                 Status = status,
             };
 
-            _context.Set<T>().Add(item);
-            _context.SaveChanges();
+            await _context.Set<T>().AddAsync(item);
+            await _context.SaveChangesAsync();
             return item;
         }
 
-        public T Create(T baseEntity)
+        public async Task<T> CreateAsync(T baseEntity)
         {
             var item = new T()
             {
@@ -46,44 +46,45 @@ namespace EFApp
                 Status = baseEntity.Status
             };
 
-            _context.Set<T>().Add(item);
-            _context.SaveChanges();
+            await _context.Set<T>().AddAsync(item);
+            await _context.SaveChangesAsync();
             return item;
         }
 
-        public bool Delete(Guid id)
+        public async Task<bool> ArchiveAsync(Guid id)
         {
-            var item = _context.Set<T>().Find(id);
-            if (item != null)
-            {
-                _context.Set<T>().Remove(item);
-                _context.SaveChanges();
-                return true;
-            }
-            else
-            {
-                throw new KeyNotFoundException("Сущность не найдена для удаления.");
-            }
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity == null)
+                throw new KeyNotFoundException("Сущность не найдена.");
+
+            if (IsEntityUsed(id)) 
+                return false;
+
+            entity.Status = StatusTD.Archived;
+            _context.Set<T>().Update(entity);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public IEnumerable<T> GetAllByName(string name)
+        public async Task<IEnumerable<T>> GetAllByNameAsync(string name)
         {
-            return _context.Set<T>().Where(entity => entity.Name == name).ToList();
+            return await _context.Set<T>().Where(entity => entity.Name == name).ToListAsync();
         }
 
-        public IEnumerable<T> GetAllByStatus(StatusTD status)
+        public async Task<IEnumerable<T>> GetAllByStatusAsync(StatusTD status)
         {
-            return _context.Set<T>().Where(entity => entity.Status == status).ToList();
+            return await _context.Set<T>().Where(entity => entity.Status == status).ToListAsync();
         }
 
-        public IEnumerable<T> GetAllByName()
+        public async Task<IEnumerable<T>> GetAllByNameAsync()
         {
-            return _context.Set<T>().ToList();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public bool Edit(T baseEntity)
+        public async Task<bool> EditAsync(T baseEntity)
         {
-            var existingEntity = _context.Set<T>().Find(baseEntity.Id);
+            var existingEntity = await _context.Set<T>().FindAsync(baseEntity.Id);
             if (existingEntity is null) return false;
             bool hasChanges = false;
 
@@ -98,31 +99,37 @@ namespace EFApp
                 try
                 {
                     _context.Set<T>().Update(existingEntity);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return true;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntityExists(baseEntity.Id)) return false;
+                    if (!EntityExists(baseEntity.Id).Result) return false;
                     else throw;
                 }
 
             return true;
         }
 
-        public bool EntityExists(Guid id)
+        public async Task<bool> EntityExists(Guid id)
         {
             return _context.Set<T>().Any(e => e.Id == id);
         }
 
-        bool IBaseEntityService<T>.Edit(T baseEntity)
+        //public async Task<bool> EditAsync(T baseEntity)
+        //{
+        //    return await EditAsync(baseEntity);
+        //}
+
+        public async Task SaveChangesAsync()
         {
-            return Edit(baseEntity);
+            await _context.SaveChangesAsync();
         }
 
-        public void SaveChanges()
+        //Не реализован(заглушка)
+        private bool IsEntityUsed(Guid id)
         {
-            _context.SaveChanges();
+            return false;
         }
     }
 }

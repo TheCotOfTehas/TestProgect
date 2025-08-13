@@ -21,9 +21,9 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _baseEntityService = baseEntityService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var allEntity = _baseEntityService.GetAllByName();
+            var allEntity = await _baseEntityService.GetAllByNameAsync();
             return View(allEntity);
         }
 
@@ -35,14 +35,14 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Name,Status")] UnitMeasurement unitMeasurement)
         {
-            _baseEntityService.Create(unitMeasurement);
+            await _baseEntityService.CreateAsync(unitMeasurement);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult Edit(UnitMeasurement unitMeasurement)
+        public async Task<IActionResult> Edit(UnitMeasurement unitMeasurement)
         {
-            var existingUnitMeasurement = _baseEntityService.Edit(unitMeasurement);
+            var existingUnitMeasurement = await _baseEntityService.EditAsync(unitMeasurement);
             if (!existingUnitMeasurement) return NotFound();
             return RedirectToAction(nameof(Index));
         }
@@ -50,7 +50,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(Guid id)
         {
-            _baseEntityService.Delete(id);
+            _baseEntityService.ArchiveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

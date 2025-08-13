@@ -2,6 +2,7 @@
 using ManagementApplication.BaseEntity;
 using ManagementApplication.Interfaces;
 using EFApp;
+using System.Threading.Tasks;
 
 namespace ERPSystemDevelopment.Controllers.ReferenceBooks
 {
@@ -14,9 +15,9 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
             _baseEntityService = baseEntityService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var allEntity = _baseEntityService.GetAllByName();
+            var allEntity = await _baseEntityService.GetAllByNameAsync();
             return View(allEntity);
         }
 
@@ -28,22 +29,22 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         [HttpPost]
         public async Task<IActionResult> Create([Bind("Id,Name,Status")] Resource resource)
         {
-            _baseEntityService.Create(resource);
+            await _baseEntityService.CreateAsync(resource);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public IActionResult Edit(Resource resource)
+        public async Task<IActionResult> Edit(Resource resource)
         {
-            var existingResource = _baseEntityService.Edit(resource);
+            var existingResource = await _baseEntityService.EditAsync(resource);
             if (!existingResource) return NotFound();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _baseEntityService.Delete(id);
+            await _baseEntityService.ArchiveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
