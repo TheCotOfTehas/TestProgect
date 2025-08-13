@@ -7,23 +7,22 @@ using ManagementApplication.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace ERPSystemDevelopment
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
-
-            // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddDbContext<ApplicationContext>(x =>
-                 //x.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;")); //Это у меня на компе
-                 x.UseSqlServer(@"Server=ms-sql-10.in-solve.ru;Database=1gb_granddb;User ID=1gb_grand-smeta-kostoma;Password=dfs$t55FD;Encrypt=True;TrustServerCertificate=False;"));//это на серваке
+            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnection"); //или дома "DefaultConnectionHome"
+            builder.Services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<BaseEntityService<Customer>>();
             builder.Services.AddScoped<BaseEntityService<Resource>>();
@@ -33,11 +32,10 @@ namespace ERPSystemDevelopment
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
