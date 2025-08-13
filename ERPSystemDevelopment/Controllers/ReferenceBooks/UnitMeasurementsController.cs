@@ -48,9 +48,9 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            _baseEntityService.ArchiveAsync(id);
+            await _baseEntityService.ArchiveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

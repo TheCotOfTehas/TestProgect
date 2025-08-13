@@ -32,7 +32,7 @@ namespace EFApp.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
-            //SeedData(modelBuilder);
+            SeedData(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

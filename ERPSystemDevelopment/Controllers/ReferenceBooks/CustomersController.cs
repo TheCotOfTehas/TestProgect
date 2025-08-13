@@ -36,7 +36,7 @@ namespace ERPSystemDevelopment.Controllers.ReferenceBooks
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(Customer customer)
+        public async Task<IActionResult> Edit(Customer customer)
         {
             var existingCustomer = await _baseEntityService.EditAsync(customer);
             if (!existingCustomer) return NotFound();
