@@ -20,6 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFApp", "EFApp\EFApp.csproj
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.Test", "TestProjectXUnit\TestTask.Test.csproj", "{D8AD4914-2F3D-4F6A-9033-5CB8FA7F2BD0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6892042-1FB8-4F80-8DFA-D74508619C1F} = {F6892042-1FB8-4F80-8DFA-D74508619C1F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

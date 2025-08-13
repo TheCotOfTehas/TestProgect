@@ -29,7 +29,7 @@
                 <td><input type="text" name="Name" value="@item.Name" /></td>
                 <td>
                     @Html.DropDownList("Status",
-                    new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }, item.Status.ToString()),
+                    new SelectList(new string[] { StatusTD.Archived.ToString(), StatusTD.Active.ToString() }, item.Status.ToString()),
                                 new { @class = "form-control" })
             </td>
             <td><button type="submit">Сохранить</button></td>

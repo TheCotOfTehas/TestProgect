@@ -18,7 +18,7 @@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div>
-            @Html.DropDownList("Status", new SelectList(new string[] { StatusTD.Failure.ToString(), StatusTD.Success.ToString() }), "Выберите Статус")
+            @Html.DropDownList("Status", new SelectList(new string[] { StatusTD.Archived.ToString(), StatusTD.Active.ToString() }), "Выберите Статус")
         </div>
             <div class="form-group">
                 <input type="submit" value="Создать" class="btn btn-primary" />

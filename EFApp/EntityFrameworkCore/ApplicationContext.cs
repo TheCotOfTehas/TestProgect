@@ -45,23 +45,23 @@ namespace EFApp.EntityFrameworkCore
         {
             // Заполнение таблицы UnitMeasurements
             modelBuilder.Entity<UnitMeasurement>().HasData(
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Success },
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Success },
-                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Success }
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Kilogram", Status = StatusTD.Active },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Liter", Status = StatusTD.Active },
+                new UnitMeasurement { Id = Guid.NewGuid(), Name = "Meter", Status = StatusTD.Active }
             );
 
             // Заполнение таблицы Resources
             modelBuilder.Entity<Resource>().HasData(
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Success },
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Success },
-                new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Success }
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 1", Status = StatusTD.Active },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 2", Status = StatusTD.Active },
+                new Resource { Id = Guid.NewGuid(), Name = "Resource 3", Status = StatusTD.Active }
             );
 
             // Заполнение таблицы Customers
             modelBuilder.Entity<Customer>().HasData(
-                new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Success, AddressCustomer = "Тест1" },
-                new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Success, AddressCustomer = "Тест2" },
-                new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Success, AddressCustomer = "Тест3" }
+                new Customer { Id = Guid.NewGuid(), Name = "Customer A", Status = StatusTD.Active, AddressCustomer = "Тест1" },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer B", Status = StatusTD.Active, AddressCustomer = "Тест2" },
+                new Customer { Id = Guid.NewGuid(), Name = "Customer C", Status = StatusTD.Active, AddressCustomer = "Тест3" }
             );
         }
     }

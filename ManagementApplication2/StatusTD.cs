@@ -8,7 +8,7 @@ namespace ManagementApplication
 {
     public enum StatusTD
     {
-        Success,
-        Failure
+        Active,
+        Archived
     }
 }
