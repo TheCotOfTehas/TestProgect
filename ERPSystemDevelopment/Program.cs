@@ -16,7 +16,7 @@ namespace ERPSystemDevelopment
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnectionHome"); //или дома "DefaultConnectionHome"
+            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnection"); //или дома "DefaultConnectionHome"
             builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connectionString));
 
