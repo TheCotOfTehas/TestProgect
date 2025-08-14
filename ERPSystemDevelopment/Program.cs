@@ -16,17 +16,25 @@ namespace ERPSystemDevelopment
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
-            string connectionString =  builder.Configuration.GetConnectionString("DefaultConnection"); //или дома "DefaultConnectionHome"
+            //builder.Services.AddDbContext<ApplicationContext>();
+
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); //или дома "DefaultConnectionHome"
             builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDbContext<ApplicationContext>();
+ 
+            //builder.Services.AddDbContext<ApplicationContext>();
 
             builder.Services.AddScoped<BaseEntityService<Customer>>();
             builder.Services.AddScoped<BaseEntityService<Resource>>();
             builder.Services.AddScoped<BaseEntityService<UnitMeasurement>>();
-
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                db.Database.EnsureCreated();
+            }
 
             var logger = app.Services.GetRequiredService<ILogger<Program>>();
 

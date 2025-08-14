@@ -19,33 +19,25 @@ namespace EFApp.EntityFrameworkCore
         public DbSet<DocumentShipment> DocumentShipments { get; set; } = null!;
         public DbSet<ResourceShipment> ResourceShipments { get; set; } = null!;
 
-
-
-        public ApplicationContext()
+        public ApplicationContext(string connectionString)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+            _connectionString = connectionString;
         }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) 
             : base(options)
-        {
-        }
+        {  }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            OnModelCreatingPartial(modelBuilder);
             SeedData(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Если опции не настроены - настроим из _connectionString
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(_connectionString);
             }
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=testdb;Trusted_Connection=True;");
         }
 
         private void SeedData(ModelBuilder modelBuilder)
