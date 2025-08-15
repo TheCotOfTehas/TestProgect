@@ -2,6 +2,7 @@ using EFApp;
 using EFApp.EntityFrameworkCore;
 using ManagementApplication.BaseEntity;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -30,11 +31,15 @@ namespace ERPSystemDevelopment
             builder.Services.AddScoped<BaseEntityService<UnitMeasurement>>();
             var app = builder.Build();
 
+
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
                 db.Database.EnsureCreated();
+                db.Dispose();
+                SqlConnection.ClearAllPools();
             }
+
 
             var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
